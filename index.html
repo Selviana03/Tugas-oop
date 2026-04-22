@@ -1,0 +1,170 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  bool darkMode = true;
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: darkMode ? ThemeData.dark() : ThemeData.light(),
+      home: HomePage(
+        darkMode: darkMode,
+        toggleTheme: () {
+          setState(() {
+            darkMode = !darkMode;
+          });
+        },
+      ),
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  final bool darkMode;
+  final VoidCallback toggleTheme;
+
+  HomePage({required this.darkMode, required this.toggleTheme});
+
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("Tugas OOP Dart"),
+          bottom: TabBar(
+            tabs: [
+              Tab(text: "Materi"),
+              Tab(text: "Konsep"),
+              Tab(text: "Contoh"),
+            ],
+          ),
+        ),
+        body: Stack(
+          children: [
+            Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(15),
+                  child: Container(
+                    padding: EdgeInsets.all(15),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      border: Border.all(color: Colors.cyan),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Nama: Serlin Selviana Giay",
+                            style: TextStyle(fontSize: 18)),
+                        SizedBox(height: 5),
+                        Text("NIM: 251410030",
+                            style: TextStyle(fontSize: 18)),
+                        SizedBox(height: 5),
+                        Text("Kelas: SI2A",
+                            style: TextStyle(fontSize: 18)),
+                      ],
+                    ),
+                  ),
+                ),
+
+                Expanded(
+                  child: TabBarView(
+                    children: [
+                      materi(),
+                      konsep(),
+                      contoh(),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+
+            Positioned(
+              bottom: 20,
+              right: 20,
+              child: ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.cyan,
+                  shape: StadiumBorder(),
+                ),
+                icon: Icon(Icons.dark_mode, color: Colors.black),
+                label: Text(
+                  darkMode ? "Dark Mode" : "Light Mode",
+                  style: TextStyle(color: Colors.black),
+                ),
+                onPressed: toggleTheme,
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget materi() {
+    return Padding(
+      padding: EdgeInsets.all(20),
+      child: Card(
+        child: Padding(
+          padding: EdgeInsets.all(15),
+          child: Text(
+            "Object Oriented Programming (OOP)\n\n"
+            "OOP adalah paradigma pemrograman yang menggunakan objek "
+            "untuk merepresentasikan data dan perilaku dalam program.",
+            style: TextStyle(fontSize: 16),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget konsep() {
+    return Padding(
+      padding: EdgeInsets.all(20),
+      child: Card(
+        child: Padding(
+          padding: EdgeInsets.all(15),
+          child: Text(
+            "Konsep utama OOP:\n\n"
+            "1. Encapsulation\n"
+            "2. Inheritance\n"
+            "3. Polymorphism\n"
+            "4. Abstraction",
+            style: TextStyle(fontSize: 16),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget contoh() {
+    return Padding(
+      padding: EdgeInsets.all(20),
+      child: Card(
+        child: Padding(
+          padding: EdgeInsets.all(15),
+          child: Text(
+            "Contoh sederhana OOP di Dart:\n\n"
+            "class Mahasiswa {\n"
+            " String nama;\n"
+            " String nim;\n"
+            " Mahasiswa(this.nama, this.nim);\n"
+            "}\n",
+            style: TextStyle(fontSize: 16),
+          ),
+        ),
+      ),
+    );
+  }
+}
